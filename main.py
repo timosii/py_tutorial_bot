@@ -3,6 +3,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from aiogram import F
 from config import settings
+from background import keep_alive
 import random
 
 
@@ -12,7 +13,7 @@ WHO_SEND_ID = settings.WHO_SEND_ID
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher()
 
-PHRASES = ["Получил, круто!", "Интересная идея!", "А что, так можно было? Круто, передам хозяину!", "Это действительно может быть интересно!", "Добавлю в руководство!"]
+PHRASES = ["Получил, круто!", "Интересная идея!", "Это действительно может быть интересно!", "Добавлю в руководство!"]
 
 
 @dp.message(CommandStart())
@@ -31,7 +32,7 @@ async def process_save_files(message: Message):
     await bot.forward_message(WHO_SEND_ID, message.chat.id, message_to_forward_id)
 
     if message.photo:
-        await message.answer(text=f"Сохранил фото, обязательно передам! Спасибо!")
+        await message.answer(text="Сохранил фото, обязательно передам! Спасибо!")
         
     else:
         await message.answer("Сохранил документ, обязательно передам! Спасибо!")
@@ -43,6 +44,6 @@ async def process_send_text(message: Message):
     await bot.send_message(WHO_SEND_ID, f"Инфо об отправителе:\n{form_message}\n\n{message.text}")
     await message.answer(f"{random.choice(PHRASES)} Спасибо за участие в проекте!")
 
-    
+keep_alive()    
 if __name__ == '__main__':
     dp.run_polling(bot)
