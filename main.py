@@ -3,7 +3,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from aiogram import F
 from config import settings
-from background import keep_alive
+
 import random
 
 
@@ -44,6 +44,6 @@ async def process_send_text(message: Message):
     await bot.send_message(WHO_SEND_ID, f"Инфо об отправителе:\n{form_message}\n\n{message.text}")
     await message.answer(f"{random.choice(PHRASES)} Спасибо за участие в проекте!")
 
-keep_alive()    
+    
 if __name__ == '__main__':
     dp.run_polling(bot)
